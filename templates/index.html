@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tha Dub Club</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+	<style>
+		:root {
+			--tdc-ink: #12151c;
+			--tdc-panel: #1a1f29;
+			--tdc-panel-2: #202634;
+			--tdc-line: #2c3342;
+			--tdc-gold: #f5b942;
+			--tdc-gold-dim: #a9812f;
+			--tdc-cyan: #33d9c4;
+			--tdc-text: #e8e6e1;
+			--tdc-text-dim: #8f96a3;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			background-color: var(--tdc-ink);
+			color: var(--tdc-text);
+			font-family: 'Barlow', sans-serif;
+			overflow-x: hidden;
+		}
+
+		h1, h2, h3, .tdc-display {
+			font-family: 'Rajdhani', sans-serif;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.02em;
+		}
+
+		.tdc-mono {
+			font-family: 'JetBrains Mono', monospace;
+		}
+
+		/* ---------- Navbar ---------- */
+		.tdc-navbar {
+			background-color: rgba(18, 21, 28, 0.92);
+			backdrop-filter: blur(6px);
+			border-bottom: 1px solid var(--tdc-line);
+		}
+
+		.tdc-brand {
+			font-family: 'Rajdhani', sans-serif;
+			font-weight: 700;
+			font-size: 1.4rem;
+			letter-spacing: 0.06em;
+			color: var(--tdc-text) !important;
+		}
+
+		.tdc-brand span { color: var(--tdc-gold); }
+
+		.tdc-nav-link {
+			font-family: 'Rajdhani', sans-serif;
+			font-weight: 600;
+			font-size: 0.95rem;
+			letter-spacing: 0.08em;
+			color: var(--tdc-text-dim) !important;
+			padding: 0.5rem 1rem !important;
+			position: relative;
+			transition: color 0.2s ease;
+		}
+
+		.tdc-nav-link::after {
+			content: "";
+			position: absolute;
+			left: 1rem;
+			right: 1rem;
+			bottom: 0.15rem;
+			height: 2px;
+			background: var(--tdc-gold);
+			transform: scaleX(0);
+			transform-origin: left;
+			transition: transform 0.2s ease;
+		}
+
+		.tdc-nav-link:hover { color: var(--tdc-text) !important; }
+		.tdc-nav-link:hover::after { transform: scaleX(1); }
+
+		/* ---------- Live ticker (signature element) ---------- */
+		.tdc-ticker {
+			background: linear-gradient(90deg, var(--tdc-panel-2), var(--tdc-panel));
+			border-bottom: 1px solid var(--tdc-line);
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 0.8rem;
+			letter-spacing: 0.05em;
+		}
+
+		.tdc-dot {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: var(--tdc-cyan);
+			display: inline-block;
+			margin-right: 0.5rem;
+			box-shadow: 0 0 0 0 rgba(51, 217, 196, 0.6);
+			animation: tdc-pulse 1.8s infinite;
+		}
+
+		@keyframes tdc-pulse {
+			0%   { box-shadow: 0 0 0 0 rgba(51, 217, 196, 0.55); }
+			70%  { box-shadow: 0 0 0 8px rgba(51, 217, 196, 0); }
+			100% { box-shadow: 0 0 0 0 rgba(51, 217, 196, 0); }
+		}
+
+		.tdc-ticker-sep { color: var(--tdc-line); margin: 0 0.9rem; }
+
+		/* ---------- Hero ---------- */
+		.tdc-hero {
+			position: relative;
+			padding: 6rem 0 5rem;
+			background:
+				radial-gradient(ellipse 60% 55% at 80% 10%, rgba(245, 185, 66, 0.14), transparent 60%),
+				radial-gradient(ellipse 50% 50% at 10% 90%, rgba(51, 217, 196, 0.10), transparent 60%);
+		}
+
+		.tdc-hero::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-image:
+				linear-gradient(rgba(232,230,225,0.035) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(232,230,225,0.035) 1px, transparent 1px);
+			background-size: 42px 42px;
+			mask-image: linear-gradient(180deg, black, transparent 85%);
+			pointer-events: none;
+		}
+
+		.tdc-eyebrow {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 0.8rem;
+			letter-spacing: 0.15em;
+			color: var(--tdc-cyan);
+		}
+
+		.tdc-hero h1 {
+			font-size: clamp(2.6rem, 6vw, 4.6rem);
+			line-height: 0.98;
+			margin: 0.5rem 0 1.2rem;
+		}
+
+		.tdc-hero h1 .tdc-accent { color: var(--tdc-gold); }
+
+		.tdc-hero p.lead {
+			color: var(--tdc-text-dim);
+			font-size: 1.15rem;
+			max-width: 34rem;
+		}
+
+		.btn-tdc-gold {
+			background: var(--tdc-gold);
+			border: 1px solid var(--tdc-gold);
+			color: #14150f;
+			font-family: 'Rajdhani', sans-serif;
+			font-weight: 700;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+			padding: 0.65rem 1.6rem;
+			transition: transform 0.15s ease, box-shadow 0.15s ease;
+		}
+
+		.btn-tdc-gold:hover {
+			color: #14150f;
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(245, 185, 66, 0.25);
+		}
+
+		.btn-tdc-outline {
+			background: transparent;
+			border: 1px solid var(--tdc-cyan);
+			color: var(--tdc-cyan);
+			font-family: 'Rajdhani', sans-serif;
+			font-weight: 700;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+			padding: 0.65rem 1.6rem;
+			transition: all 0.15s ease;
+		}
+
+		.btn-tdc-outline:hover {
+			background: rgba(51, 217, 196, 0.1);
+			color: var(--tdc-cyan);
+			transform: translateY(-2px);
+		}
+
+		/* ---------- Section shared ---------- */
+		.tdc-section { padding: 5rem 0; }
+		.tdc-section-alt { background: var(--tdc-panel); }
+
+		.tdc-kicker {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 0.78rem;
+			letter-spacing: 0.15em;
+			color: var(--tdc-gold-dim);
+		}
+
+		.tdc-section h2 {
+			font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+			margin-top: 0.35rem;
+		}
+
+		/* ---------- Roster cards ---------- */
+		.tdc-card {
+			background: var(--tdc-panel-2);
+			border: 1px solid var(--tdc-line);
+			border-radius: 6px;
+			padding: 1.6rem;
+			height: 100%;
+			transition: border-color 0.2s ease, transform 0.2s ease;
+		}
+
+		.tdc-card:hover {
+			border-color: var(--tdc-gold-dim);
+			transform: translateY(-4px);
+		}
+
+		.tdc-avatar {
+			width: 56px;
+			height: 56px;
+			border-radius: 6px;
+			background: linear-gradient(135deg, var(--tdc-gold), var(--tdc-cyan));
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: 'Rajdhani', sans-serif;
+			font-weight: 700;
+			color: #14150f;
+			font-size: 1.1rem;
+			margin-bottom: 1rem;
+		}
+
+		.tdc-role-tag {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 0.7rem;
+			letter-spacing: 0.08em;
+			color: var(--tdc-text-dim);
+			text-transform: uppercase;
+		}
+
+		/* ---------- Content cards ---------- */
+		.tdc-clip {
+			border: 1px solid var(--tdc-line);
+			border-radius: 6px;
+			overflow: hidden;
+			background: var(--tdc-panel-2);
+			height: 100%;
+		}
+
+		.tdc-clip-thumb {
+			aspect-ratio: 16 / 9;
+			background: linear-gradient(135deg, var(--tdc-panel), #262d3d 60%, rgba(245,185,66,0.15));
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.tdc-clip-thumb::after {
+			content: "▶";
+			color: var(--tdc-text);
+			opacity: 0.55;
+			font-size: 1.6rem;
+		}
+
+		.tdc-clip-body { padding: 1rem 1.2rem; }
+		.tdc-clip-body h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+		.tdc-clip-meta {
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 0.72rem;
+			color: var(--tdc-text-dim);
+		}
+
+		/* ---------- Discord CTA ---------- */
+		.tdc-cta {
+			background: linear-gradient(120deg, rgba(245,185,66,0.10), rgba(51,217,196,0.08));
+			border: 1px solid var(--tdc-line);
+			border-radius: 10px;
+			padding: 3rem 2.5rem;
+		}
+
+		/* ---------- Footer ---------- */
+		.tdc-footer {
+			border-top: 1px solid var(--tdc-line);
+			padding: 2.2rem 0;
+			font-size: 0.85rem;
+			color: var(--tdc-text-dim);
+		}
+
+		.tdc-footer a { color: var(--tdc-text-dim); text-decoration: none; margin-left: 1.2rem; }
+		.tdc-footer a:hover { color: var(--tdc-gold); }
+
+		@media (prefers-reduced-motion: reduce) {
+			.tdc-dot { animation: none; }
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Live ticker -->
+	<div class="tdc-ticker py-2">
+		<div class="container d-flex flex-wrap align-items-center">
+			<span><span class="tdc-dot"></span>LIVE ON TWITCH · @SLIMDUNCANTDC</span>
+			<span class="tdc-ticker-sep">/</span>
+			<span class="text-tdc-dim" style="color: var(--tdc-text-dim);">DISCORD OPEN 24/7</span>
+			<span class="tdc-ticker-sep">/</span>
+			<span style="color: var(--tdc-text-dim);">NEW CLIPS WEEKLY</span>
+		</div>
+	</div>
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg tdc-navbar sticky-top py-3">
+		<div class="container">
+			<a class="navbar-brand tdc-brand" href="#">THA <span>DUB</span> CLUB</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#tdcNav" style="border-color: var(--tdc-line);">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="tdcNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="#home">Home</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link" href="#about">About Us</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link" href="#roster">Club Members</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link" href="#content">Content</a></li>
+					<li class="nav-item ms-lg-2">
+						<a class="btn btn-tdc-gold btn-sm" href="https://discord.gg/768zjNapB">Discord</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Hero -->
+	<header class="tdc-hero" id="home">
+		<div class="container position-relative">
+			<div class="row align-items-center">
+				<div class="col-lg-8">
+					<div class="tdc-eyebrow">SAN DIEGO · COMMUNITY-RUN · SINCE DAY ONE</div>
+					<h1>Catch a <span class="tdc-accent">dub.</span><br>Join the club.</h1>
+					<p class="lead">Tha Dub Club is a gaming community built around one idea: get better together, celebrate every win, and never rage-quit on your squad. Stream with us, grind with us, clip the highlights.</p>
+					<div class="d-flex flex-wrap gap-3 mt-4">
+						<a href="#discord" class="btn btn-tdc-gold">Join the Discord</a>
+						<a href="https://twitch.tv/SlimDuncantdc" class="btn btn-tdc-outline">Watch on Twitch</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- About -->
+	<section class="tdc-section" id="about">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="tdc-kicker">// ABOUT US</div>
+					<h2>Built by gamers, for gamers.</h2>
+				</div>
+				<div class="col-lg-6">
+					<p class="text-white-50" style="color: var(--tdc-text-dim) !important; font-size: 1.05rem;">
+						Tha Dub Club started as a small group grinding ranked together and grew into a community that shows up for each other — in-game and out. Whether you're here to compete, spectate, or just hang out in voice chat, there's a seat for you at the table.
+					</p>
+					<div class="row mt-4 tdc-mono">
+						<div class="col-4">
+							<div style="font-size:1.6rem; color: var(--tdc-gold); font-weight:700;">1.2K+</div>
+							<div class="tdc-role-tag">Members</div>
+						</div>
+						<div class="col-4">
+							<div style="font-size:1.6rem; color: var(--tdc-gold); font-weight:700;">24/7</div>
+							<div class="tdc-role-tag">Active Discord</div>
+						</div>
+						<div class="col-4">
+							<div style="font-size:1.6rem; color: var(--tdc-gold); font-weight:700;">Weekly</div>
+							<div class="tdc-role-tag">Stream Nights</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Roster -->
+	<section class="tdc-section tdc-section-alt" id="roster">
+		<div class="container">
+			<div class="tdc-kicker">// CLUB MEMBERS</div>
+			<h2 class="mb-4">Meet the crew.</h2>
+			<div class="row g-4">
+				<div class="col-md-4">
+					<div class="tdc-card">
+						<div class="tdc-avatar">SD</div>
+						<h3 class="h5 mb-1">SlimDuncan</h3>
+						<div class="tdc-role-tag mb-2">Founder · Streamer</div>
+						<p class="mb-0" style="color: var(--tdc-text-dim); font-size: 0.92rem;">Runs the stream, sets the vibe, calls the clutch plays.</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="tdc-card">
+						<div class="tdc-avatar">MO</div>
+						<h3 class="h5 mb-1">Moderator</h3>
+						<div class="tdc-role-tag mb-2">Community Lead</div>
+						<p class="mb-0" style="color: var(--tdc-text-dim); font-size: 0.92rem;">Keeps the Discord running smooth and welcomes new members.</p>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="tdc-card">
+						<div class="tdc-avatar">YOU</div>
+						<h3 class="h5 mb-1">Open Slot</h3>
+						<div class="tdc-role-tag mb-2">Future Member</div>
+						<p class="mb-0" style="color: var(--tdc-text-dim); font-size: 0.92rem;">Could be you. Join the Discord and introduce yourself.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Content -->
+	<section class="tdc-section" id="content">
+		<div class="container">
+			<div class="tdc-kicker">// CONTENT</div>
+			<h2 class="mb-4">Latest clips.</h2>
+			<div class="row g-4">
+				<div class="col-md-4">
+					<div class="tdc-clip">
+						<div class="tdc-clip-thumb"></div>
+						<div class="tdc-clip-body">
+							<h3>Clutch 1v4 Comeback</h3>
+							<div class="tdc-clip-meta">TWITCH CLIP · 2:14</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="tdc-clip">
+						<div class="tdc-clip-thumb"></div>
+						<div class="tdc-clip-body">
+							<h3>Ranked Grind Highlights</h3>
+							<div class="tdc-clip-meta">TWITCH CLIP · 5:41</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="tdc-clip">
+						<div class="tdc-clip-thumb"></div>
+						<div class="tdc-clip-body">
+							<h3>Community Game Night</h3>
+							<div class="tdc-clip-meta">VOD · 41:09</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Discord CTA -->
+	<section class="tdc-section tdc-section-alt" id="discord">
+		<div class="container">
+			<div class="tdc-cta text-center">
+				<div class="tdc-kicker justify-content-center d-flex">// JOIN US</div>
+				<h2>Your squad is waiting.</h2>
+				<p style="color: var(--tdc-text-dim); max-width: 32rem; margin: 0 auto 1.5rem;">Drop into the Discord, catch the next stream, and start racking up dubs with people who actually want you to win.</p>
+				<a href="#" class="btn btn-tdc-gold">Join the Discord</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="tdc-footer">
+		<div class="container d-flex flex-wrap justify-content-between align-items-center">
+			<div class="tdc-brand" style="font-size: 1.05rem;">THA <span style="color: var(--tdc-gold);">DUB</span> CLUB</div>
+			<div>
+				<a href="https://twitch.tv/SlimDuncantdc">Twitch</a>
+				<a href="https://discord.gg/768zjNapB">Discord</a>
+				<a href="#roster">Members</a>
+			</div>
+		</div>
+		<div class="container mt-2" style="font-size: 0.75rem;">&copy; 2026 Tha Dub Club. Catch a dub.</div>
+	</footer>
+
+</body>
+</html>
