@@ -1,4 +1,4 @@
-# Tha Dub Cub (TDC)
+# Tha Dub Club (TDC)
 
 A web application for Tha Dub Club gaming community - 
 
@@ -18,7 +18,7 @@ In active development. Currently building user registration and login
 python -m venv venv\
 venv\Scripts\activate\
 pip install -r requirements.txt\
-python app.py\
+python app.py
 
 Then open http://127.0.0.1:5000
 
