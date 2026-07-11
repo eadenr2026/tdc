@@ -4,3 +4,4 @@ __pycache__/
 .idea/
 instance/
 *.db
+flask_session/
