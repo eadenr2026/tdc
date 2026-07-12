@@ -20,6 +20,10 @@
 			<span class="text-tdc-dim" style="color: var(--tdc-text-dim);">DISCORD OPEN 24/7</span>
 			<span class="tdc-ticker-sep">/</span>
 			<span style="color: var(--tdc-text-dim);">NEW CLIPS WEEKLY</span>
+			<span class="tdc-ticker-sep">/</span>
+			{% if session.username %}
+				<span style="color: var(--tdc-text-dim);">WELCOME TO THA DUB CLUB, {{ session.username }}</span>
+			{% endif %}
 		</div>
 	</div>
 
@@ -32,12 +36,16 @@
 			</button>
 			<div class="collapse navbar-collapse justify-content-end" id="tdcNav">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="#home">Home</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/">Home</a></li>
 					<li class="nav-item"><a class="nav-link tdc-nav-link" href="#about">About Us</a></li>
 					<li class="nav-item"><a class="nav-link tdc-nav-link" href="#roster">Club Members</a></li>
 					<li class="nav-item"><a class="nav-link tdc-nav-link" href="#content">Content</a></li>
+					{% if not session %}
 					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/register">Register</a></li>
 					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/login">Login</a></li>
+					{% else %}
+					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/profile">Profile</a></li>
+					{% endif %}
 					<li class="nav-item ms-lg-2">
 						<a class="btn btn-tdc-gold btn-sm" href="https://discord.gg/768zjNapB">Discord</a>
 					</li>

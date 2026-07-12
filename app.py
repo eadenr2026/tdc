@@ -18,8 +18,8 @@ def home():
 @app.route("/register", methods=["GET", "POST"])
 def registration():
     if request.method == "POST":
-        username = request.form["Username"]
-        password = request.form["Password"]
+        username = request.form["username"]
+        password = request.form["password"]
         password_hash = generate_password_hash(password)
 
         create_user(username, password_hash)
@@ -32,20 +32,31 @@ def registration():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["Username"]
-        password = request.form["Password"]
+        username = request.form["username"]
+        password = request.form["password"]
 
         user = find_user(username)
 
         if user and check_password_hash(user["password_hash"], password):
             session["user_id"] = user["id"]
-            print(f"login success. Welcome to Tha Club, {username}")
+            session["username"] = user["username"]
             return redirect(url_for("home"))
         else:
             return redirect("login.html")
     else:
         return render_template("login.html")
 
-# Run Application
+# URL profile logout
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    session.clear()
+    return redirect(url_for("home"))
+
+# Route to Profile Page
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    return render_template("profile.html")
+
+# Run App in Debug Mode
 if __name__ == "__main__":
     app.run(debug=True)
