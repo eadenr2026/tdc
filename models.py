@@ -39,3 +39,23 @@ def find_user(username):
     connection.close()
 
     return user
+
+# Clips table
+def clips():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS club_clips (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, url TEXT NOT NULL, FOREIGN KEY (user_id) REFERENCES user_accounts(id))""")
+    connection.commit()
+    connection.close()
+
+def create_clip(user_id, url):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        "INSERT INTO club_clips (user_id, url) VALUES (?, ?)",
+        (user_id, url)
+    )
+    connection.commit()
+    connection.close()
+
+
