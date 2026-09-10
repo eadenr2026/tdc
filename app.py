@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from models import init_db, find_user, clips, create_clip
+from models import init_db, find_user, club_clips, create_clip
 from models import create_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.secret_key = "temporary-dev-key-change-me"
 
 init_db()
-clips()
+club_clips()
 
 # Route to TDC Home Page
 @app.route("/")
@@ -43,7 +43,7 @@ def login():
             session["username"] = user["username"]
             return redirect(url_for("home"))
         else:
-            return redirect("login.html")
+            return render_template("login.html")
     else:
         return render_template("login.html")
 
@@ -63,13 +63,17 @@ def profile():
 # Submit clips
 @app.route("/submit", methods=["GET", "POST"])
 def upload_clip():
-    if request.method == "POST":
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+    elif request.method == "POST":
         url = request.form["create_clip"]
         user_id = session["user_id"]
         create_clip(user_id, url)
         return render_template("index.html")
     else:
         return render_template("submit.html")
+
+
 
 # Run App in Debug Mode
 if __name__ == "__main__":

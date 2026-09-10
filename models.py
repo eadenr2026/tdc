@@ -41,7 +41,7 @@ def find_user(username):
     return user
 
 # Clips table
-def clips():
+def club_clips():
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS club_clips (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, url TEXT NOT NULL, FOREIGN KEY (user_id) REFERENCES user_accounts(id))""")
