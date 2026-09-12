@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from models import init_db, find_user, club_clips, create_clip
+from models import init_db, find_user, club_clips, create_clip, clip_votes
 from models import create_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -9,6 +9,8 @@ app.secret_key = "temporary-dev-key-change-me"
 
 init_db()
 club_clips()
+clip_votes()
+
 
 # Route to TDC Home Page
 @app.route("/")

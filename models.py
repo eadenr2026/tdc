@@ -48,6 +48,7 @@ def club_clips():
     connection.commit()
     connection.close()
 
+# Inserts member clip URL into club_clips
 def create_clip(user_id, url):
     connection = get_connection()
     cursor = connection.cursor()
@@ -58,4 +59,11 @@ def create_clip(user_id, url):
     connection.commit()
     connection.close()
 
+def clip_votes():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS clip_votes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, clip_id INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES user_accounts(id), FOREIGN KEY (clip_id) REFERENCES club_clips(id), 
+                    UNIQUE (user_id, clip_id))""")
+    connection.commit()
+    connection.close()
 
