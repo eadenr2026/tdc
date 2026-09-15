@@ -1,14 +1,22 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from models import init_db, find_user, club_clips, create_clip
-from models import create_user
-from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
 
+from flask import Flask, render_template, request, redirect, url_for, session
+from models import init_db, find_user, club_clips, create_clip, DATABASE
+from models import create_user, find_all_clips
+from werkzeug.security import generate_password_hash, check_password_hash
+import re
 app = Flask(__name__)
 
 app.secret_key = "temporary-dev-key-change-me"
 
 init_db()
 club_clips()
+
+def extract_twitch_slug(url):
+    match = re.search(r'(?:clips\.twitch\.tv\/|twitch\.tv.\/\w+\/clip\/)([\w-]+)', url)
+    if match:
+        return match.group(1)
+    return url.strip()
 
 # Route to TDC Home Page
 @app.route("/")
@@ -73,6 +81,12 @@ def upload_clip():
     else:
         return render_template("submit.html")
 
+@app.route("/clipboard", methods=["GET"])
+def tha_clipboard():
+    clips = find_all_clips()
+    return render_template("clipboard.html", clips=clips)
+
+# have to find out why clips default to jinja else loop
 
 
 # Run App in Debug Mode
