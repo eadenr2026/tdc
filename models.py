@@ -58,4 +58,11 @@ def create_clip(user_id, url):
     connection.commit()
     connection.close()
 
+def find_all_clips():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM club_clips")
+    db_clips = cursor.fetchall()
+    connection.close()
 
+    return db_clips
