@@ -12,12 +12,6 @@ app.secret_key = "temporary-dev-key-change-me"
 init_db()
 club_clips()
 
-def extract_twitch_slug(url):
-    match = re.search(r'(?:clips\.twitch\.tv\/|twitch\.tv.\/\w+\/clip\/)([\w-]+)', url)
-    if match:
-        return match.group(1)
-    return url.strip()
-
 # Route to TDC Home Page
 @app.route("/")
 def home():
@@ -85,9 +79,6 @@ def upload_clip():
 def tha_clipboard():
     clips = find_all_clips()
     return render_template("clipboard.html", clips=clips)
-
-# have to find out why clips default to jinja else loop
-
 
 # Run App in Debug Mode
 if __name__ == "__main__":
