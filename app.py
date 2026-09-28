@@ -77,8 +77,24 @@ def upload_clip():
 
 @app.route("/clipboard", methods=["GET"])
 def tha_clipboard():
+
     clips = find_all_clips()
-    return render_template("clipboard.html", clips=clips)
+    clips_with_embeds = []
+
+    for clip in clips:
+        clip_dict = dict(clip)
+        ttv_clip_url = clip_dict["url"]
+
+        ttv_id1 = ttv_clip_url.rpartition("/")[2]
+        ttv_id2 = ttv_clip_url.rstrip("/").rpartition("/")[2]
+
+        clip_dict["embed_url"] = f"https://clips.twitch.tv/embed?clip={ttv_id1}&parent=127.0.0.1"
+
+        clips_with_embeds.append(clip_dict)
+
+
+
+    return render_template("clipboard.html", clips=clips_with_embeds)
 
 # Run App in Debug Mode
 if __name__ == "__main__":
