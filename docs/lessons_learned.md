@@ -32,6 +32,14 @@ A living list of things I learned the hard way while building this project. Rere
 
 **Trust the database, not the viewer.** The PyCharm viewer's column panel shows column names and types but not table-level constraints like UNIQUE or foreign keys. Not seeing UNIQUE in the panel does not mean it is missing. To check for real, view the table's DDL or run `SELECT sql FROM sqlite_master WHERE name = 'table_name';` to see the exact CREATE TABLE text. The behavioral test is the real proof: try to violate the constraint and confirm it throws an IntegrityError.
 
+## Data shape and display
+
+**Stored data is often not the shape a display needs.** Users paste a normal Twitch clip URL (twitch.tv/streamer/clip/ID), but an iframe needs the embed format (clips.twitch.tv/embed?clip=ID&parent=domain). The clip renders only after transforming one into the other. This is a common backend job: the data comes in one shape and the display needs another, so transform it in between. Never make the user supply the awkward format themselves, since most people cannot build an embed URL.
+
+**Transform at display time, not at save time, when a value depends on environment.** Two options for where to convert the URL: when saving (store the ready embed URL) or when displaying (store the raw pasted URL, build the embed URL as the page renders). Display time is better here because the embed needs a parent=domain value that is localhost now but a real domain after deploy. Storing the raw URL keeps the database clean and portable and lets the domain be decided at render time.
+
+**A hardcoded proof of concept is not a working feature.** The Twitch embeds displayed only because embed formatted URLs were manually placed in the data. It looks done in a demo but breaks the moment a real user submits a normal link through the form. Test features with real user input, entered the way an actual user would, not with pre massaged data.
+
 ## Security
 
 **Frontend is not a security boundary.** Hiding a tab or button in HTML controls what a user can click, not what they can visit by typing the URL. Enforce access rules in the backend route. Hide in the template for UX, guard in the route for security. Need both.
@@ -44,10 +52,12 @@ A living list of things I learned the hard way while building this project. Rere
 
 **Tutorials optimize for showing features, not for my project.** A tutorial had me add Flask-Session (server side sessions) when built in cookie sessions were plenty. Adopt what fits, skip what doesn't, and know why I am adding any dependency.
 
-**The same small mistakes recur until muscle memory forms.** The redirect-vs-filename mistake, mashed-together terminal commands, forgetting a return. Repeating them is not failure, it is the reps that build the instinct. The instinct forms from correcting the mistake, not from avoiding it.
+**The same small mistakes recur until muscle memory forms.** The redirect vs filename mistake, mashed together terminal commands, forgetting a return. Repeating them is not failure, it is the reps that build the instinct. The instinct forms from correcting the mistake, not from avoiding it.
 
 **Commit changes to the branch they belong to.** Unrelated improvements should not ride along on a feature branch. Glance at the branch indicator before starting to type. If an idea belongs elsewhere, branch for it.
 
 **Features have an order, and finding it is part of the work.** I could not test voting because there was no page showing clips to vote on. Voting (#3) depends on the clip board page (#4). Some features have hidden dependencies, so figure out the build order before diving in rather than getting stuck halfway.
+
+**Taking the direction away is how I prove I can build on my own.** I was told the Twitch embed was past scope and to shelve it, and instead I read Twitch's API docs and got clips embedding with no direction from anyone. That is the test of moving without help, and I passed it. Worth remembering next time the doubt shows up: needing a map is not the same as being unable to walk it.
 
 **Coming back after a break feels like starting over but is not.** The skills are there, the recall is just slow and speeds back up within a session. Reread one route out loud in plain English to reload the mental map. Match hard reasoning to high energy days, give tired days something small.
