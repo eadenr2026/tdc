@@ -61,3 +61,4 @@ A living list of things I learned the hard way while building this project. Rere
 **Taking the direction away is how I prove I can build on my own.** I was told the Twitch embed was past scope and to shelve it, and instead I read Twitch's API docs and got clips embedding with no direction from anyone. That is the test of moving without help, and I passed it. Worth remembering next time the doubt shows up: needing a map is not the same as being unable to walk it.
 
 **Coming back after a break feels like starting over but is not.** The skills are there, the recall is just slow and speeds back up within a session. Reread one route out loud in plain English to reload the mental map. Match hard reasoning to high energy days, give tired days something small.
+

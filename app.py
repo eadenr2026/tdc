@@ -70,8 +70,13 @@ def upload_clip():
     elif request.method == "POST":
         url = request.form["create_clip"]
         user_id = session["user_id"]
-        create_clip(user_id, url)
-        return render_template("index.html")
+        username = session["username"]
+
+        if "twitch.tv" in url and "/clip/" in url:
+            create_clip(user_id, username, url)
+            return render_template("index.html")
+        else:
+            return render_template("submit.html")
     else:
         return render_template("submit.html")
 
