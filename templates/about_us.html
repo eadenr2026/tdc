@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tha Dub Club</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+	<!-- Live ticker -->
+	<div class="tdc-ticker py-2">
+		<div class="container d-flex flex-wrap align-items-center">
+			<span><span class="tdc-dot"></span>LIVE ON TWITCH · @SLIMDUNCANTDC</span>
+			<span class="tdc-ticker-sep">/</span>
+			<span class="text-tdc-dim" style="color: var(--tdc-text-dim);">DISCORD OPEN 24/7</span>
+			<span class="tdc-ticker-sep">/</span>
+			<span style="color: var(--tdc-text-dim);">NEW CLIPS WEEKLY</span>
+			<span class="tdc-ticker-sep">/</span>
+			{% if session.username %}
+				<span style="color: var(--tdc-text-dim);">WELCOME TO THA DUB CLUB, {{ session.username }}</span>
+			{% endif %}
+		</div>
+	</div>
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg tdc-navbar sticky-top py-3">
+		<div class="container">
+			<a class="navbar-brand tdc-brand" href="#">THA <span>DUB</span> CLUB</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#tdcNav" style="border-color: var(--tdc-line);">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="tdcNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link" href="#about">About Us</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link" href="#roster">Club Members</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link" href="/clipboard">Tha Clipboard</a></li>
+					{% if not session %}
+					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/register">Register</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/login">Login</a></li>
+					{% else %}
+					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/submit">Submit Clips</a></li>
+					<li class="nav-item"><a class="nav-link tdc-nav-link active" href="/profile">Profile</a></li>
+					{% endif %}
+					<li class="nav-item ms-lg-2">
+						<a class="btn btn-tdc-gold btn-sm" href="https://discord.gg/bpzUydbw4">Discord</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+    <section class="tdc-section" id="content">
+      <div class="container">
+        <div class="tdc-kicker">// Community Purpose
+        </div>
+        <h1 class="mb-4">We are <span style="color: var(--tdc-gold);">TDC.</span></h1>
+        <h3>Tha Dub Club was established by an incredibly close group of friends whose bond over creating
+        memorable moments in gaming was realized as the foundation of their friendship.<br></br>That's what this
+        community is about.<br></br> Catching dubs, experiencing exciting times with friends & sharing those experiences with each other
+        in hopes of creating new bonds and continuing the cycle we call "gaming".<br></br> That's what Gaming comes down too.<br></br>
+        TDC is committed to promoting positive, authentic, and passionate content from our members and gamers we believe represent our community values.<br></br>
+        So what are you waiting for? Join Tha Club Today!</h3>
+      </div>
+    </section>
+
+    <!-- Footer -->
+	<footer class="tdc-footer">
+		<div class="container d-flex flex-wrap justify-content-between align-items-center">
+			<div class="tdc-brand" style="font-size: 1.05rem;">THA <span style="color: var(--tdc-gold);">DUB</span> CLUB</div>
+			<div>
+				<a href="https://twitch.tv/SlimDuncantdc">Twitch</a>
+				<a href="https://discord.gg/768zjNapB">Discord</a>
+				<a href="#roster">Members</a>
+			</div>
+		</div>
+		<div class="container mt-2" style="font-size: 0.75rem;">&copy; 2026 Tha Dub Club. Catch a dub.</div>
+	</footer>
+</body>
