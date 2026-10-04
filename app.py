@@ -17,6 +17,11 @@ club_clips()
 def home():
     return render_template("index.html")
 
+# Route to About us Page
+@app.route("/about_us", methods=["GET"])
+def about_us():
+    return render_template("about_us.html")
+
 # Route to TDC Registration Page
 @app.route("/register", methods=["GET", "POST"])
 def registration():
